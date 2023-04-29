@@ -1,5 +1,7 @@
 const content = document.querySelector('.content');
-const btn = document.querySelector('btn');
+const btn = document.querySelector('.btn');
+const character = document.querySelector('#character')
+const imgs = document.querySelector('.imgs')
 
 let card = document.createElement('div');
 let image = document.createElement('div');
@@ -14,23 +16,47 @@ card.classList.add('card');
 image.classList.add('image');
 info.classList.add('info');
 person.classList.add('person');
-statusCharacter.classList.add('status');
+
 desc.classList.add('desc');
 
-content.appendChild(card);
-card.appendChild(image);
-image.appendChild(img);
-//SRC DA IMAGEM
-card.appendChild(info);
-info.appendChild(person);
-person.appendChild(names);
-person.appendChild(statusCharacter);
-info.appendChild(desc);
 
-const fetchApi = (value) => {
+
+
+const fetchApi = async (page) => {
+    let url = `https://rickandmortyapi.com/api/character/?page=${page}`;
+    
+    const api= await fetch(url);
+    const dados = await api.json();
+    content.innerHTML = ""
+
+    dados.results.map(item => {
+        content.innerHTML += `
+            <div class="card">
+                    <div class="image">
+                        <img src="${item.image}" class="imgs" alt="">
+                    </div>
+                    <div class="info">
+                        <div class="person">
+                            <h4>${item.name}</h4>
+                            <div class="status">${item.status}</div>
+                        </div>
+                        <div class="desc">
+                        ${item.species}
+                        </div>
+                    </div>
+                </div>
+        `
+
+        console.log(dados)
+    })
+   
+    
 
 }
 
-btn.addEventListener('click', () => {
+fetchApi(1);
 
+btn.addEventListener('click', async (event) => {
+    
+    
 });
