@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
     <title>Rick and Morty</title>
@@ -20,12 +23,15 @@
         </div>
         <div class="content_right">
             <div class="search">
-                <input type="search" name="" id="character">
-                <button class="btn">Vai</button>
+                <form id="form" class="form" onsubmit="search(event)">
+                    <input type="search" name="" id="character">
+                    <button class="btn" type="submit">Vai</button>
+                </form>
+                
             </div>
-            <select name="page" id="page" onchange="fetchApi(this.value)">
+            <select name="page" id="page" onchange="page(this.value)">
                 <script>
-                    for(let i = 1; i <= 83; i++){
+                    for(let i = 1; i <= 42; i++){
                         document.write(`<option value = "${i}">${i}</option>`)
                     }
                 </script>

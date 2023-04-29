@@ -1,62 +1,75 @@
 const content = document.querySelector('.content');
 const btn = document.querySelector('.btn');
-const character = document.querySelector('#character')
+
 const imgs = document.querySelector('.imgs')
 
-let card = document.createElement('div');
-let image = document.createElement('div');
-let img = document.createElement('img');
-let info = document.createElement('div');
-let person = document.createElement('div');
-let names = document.createElement('h4');
-let statusCharacter = document.createElement('div');
-let desc = document.createElement('div');
-
-card.classList.add('card');
-image.classList.add('image');
-info.classList.add('info');
-person.classList.add('person');
-
-desc.classList.add('desc');
 
 
+let urlapi = `https://rickandmortyapi.com/api/character/`
 
 
-const fetchApi = async (page) => {
-    let url = `https://rickandmortyapi.com/api/character/?page=${page}`;
+const fetchApi = async (url, name = '', page = 1) => {
+    if(name !== ''){
+        var res = await fetch(`${url}?name=${name}`);
+    } else if (page !== 1){
+        var res = await fetch(`${url}?page=${page}`);
+    } else {
+        var res = await fetch(url);
+    }
+    const dados = await res.json();
+
+    const characters = dados.results;
+    cards(characters);
+
     
-    const api= await fetch(url);
-    const dados = await api.json();
-    content.innerHTML = ""
-
-    dados.results.map(item => {
-        content.innerHTML += `
-            <div class="card">
-                    <div class="image">
-                        <img src="${item.image}" class="imgs" alt="">
-                    </div>
-                    <div class="info">
-                        <div class="person">
-                            <h4>${item.name}</h4>
-                            <div class="status">${item.status}</div>
-                        </div>
-                        <div class="desc">
-                        ${item.species}
-                        </div>
-                    </div>
-                </div>
-        `
-
-        console.log(dados)
-    })
-   
-    
-
 }
 
-fetchApi(1);
+//Renderização das cards
 
-btn.addEventListener('click', async (event) => {
-    
-    
-});
+const cards = (characters) => {
+    content.innerHTML = ''
+    characters.map((item) => {
+        content.insertAdjacentHTML('beforeend', `
+        <div class="card">
+        <div class="image">
+            <img src="${item.image}" class="imgs" alt="${item.name}">
+        </div>
+        <div class="info">
+            <div class="person">
+                <h4>${item.name}</h4>
+                <div class="status">${item.status}</div>
+            </div>
+            <div class="desc">
+                ${item.species}
+            </div>
+        </div>
+    </div>
+
+        `)
+    })
+}
+
+//Campo de busca
+
+const search = (event) => {
+    event.preventDefault()
+    const name = document.querySelector('#character').value
+    fetchApi(urlapi, name)
+}
+
+//Numero de paginas
+const page = (event) => {
+    event.preventDefault()
+    const page = document.querySelector('#page').value
+    console.log(page)
+    fetchApi(urlapi, page)
+}
+
+
+
+
+fetchApi(urlapi);
+
+/*
+
+*/ 

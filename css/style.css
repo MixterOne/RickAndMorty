@@ -9,6 +9,7 @@
     --background: #151521;
     --bg-box: #1e1e2d;
     --bg-second-box: #242430;
+    --bg-card: #747474;
 }
 
 body{
@@ -16,6 +17,7 @@ body{
     display: flex;
     justify-content: center;
     padding: 20px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .container{
@@ -38,7 +40,7 @@ body{
 
 .content_right{
     width: 100%;
-    height: 140vh;
+    height: 150vh;
     background-color: var(--bg-box);
     margin-left: 10px;
     padding: 12px;
@@ -80,7 +82,7 @@ body{
     flex-wrap: wrap;
     margin: 3px;
     padding: 5px;
-    background-color: var(--bg-second-box);
+    background-color: var(--bg-card);
 }
 
 .card .image{
@@ -111,10 +113,16 @@ body{
 
 .card .info .desc{
     padding: 5px;
+    background: var(--bg-box); 
+    height: 20px;
+    color: #fff;
+    width: 91%;
+    padding: 5px 8px;
+    text-transform: uppercase;
 }
 
 .status{
-    background-color: green;
+    background: var(--bg-box); 
     height: 20px;
     color: #fff;
     padding: 5px 8px;
