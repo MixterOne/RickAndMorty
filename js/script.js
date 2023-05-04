@@ -1,37 +1,101 @@
 const content = document.querySelector('.content');
-const btn = document.querySelector('.btn');
+const search = document.querySelector('.nameSearch')
+const more = document.querySelector('.more')
 
-const imgs = document.querySelector('.imgs')
+const sFilter =document.querySelector('#species');
+const filterS =document.querySelector('#status');
 
+let api = `https://rickandmortyapi.com/api/character/`;
 
-
-let urlapi = `https://rickandmortyapi.com/api/character/`
-
-
-const fetchApi = async (url, name = '', page = 1) => {
-    if(name !== ''){
-        var res = await fetch(`${url}?name=${name}`);
-    } else if (page !== 1){
-        var res = await fetch(`${url}?page=${page}`);
-    } else {
-        var res = await fetch(url);
-    }
-    const dados = await res.json();
-
-    const characters = dados.results;
-    cards(characters);
-
-    
+const filter = {
+    name: '',
+    species: '',
+    status: '',
+    page: 1,
 }
+
+
+const fetchApi = async ({name, species, status, page = 1}) => {
+    const res = await fetch(`${api}?name=${name}&species=${species}&status=${status}&page=${page}`);
+
+    const cardCharacters = await res.json();
+
+    return cardCharacters.results
+}
+
+
 
 //Renderização das cards
 
-const cards = (characters) => {
+const cards = async ({ cardCharacters }) => {
+   
+    cardCharacters.forEach((item) => {
+    
+        return content.innerHTML += `
+            <div class="card">
+            <div class="image">
+                <div class="id">#${item.id}</div>
+                <img src="${item.image}" class="imgs" alt="${item.name}">
+            </div>
+            <div class="info">
+                <div class="person">
+                    <h4>${item.name}</h4>
+                    <div class="status">${item.status}</div>
+                </div>
+                <div class="desc">
+                    ${item.species}<br>
+                </div>
+            </div>
+            </div>
+        `
+    });
+}
+//Filtro de species
+sFilter.addEventListener('change', async (event) => {
+    filter.species = event.target.value;
+    content.innerHTML = '';
+    const cardCharacters = await fetchApi(filter)
+    cards({cardCharacters})
+})
+
+//Filtro de Status
+filterS.addEventListener('change', async (event) => {
+    filter.status = event.target.value;
     content.innerHTML = ''
-    characters.map((item) => {
-        content.insertAdjacentHTML('beforeend', `
-        <div class="card">
+    const cardCharacters = await fetchApi(filter)
+    cards({cardCharacters})
+})
+
+//Botão de carregar mais
+async function handleMore(){
+    filter.page += 1;
+    const cardCharacters = await fetchApi(filter)
+    cards({cardCharacters})
+}
+
+more.addEventListener('click', handleMore)
+
+
+//Campo de busca
+function page ({page}) {
+    divRes = document.querySelector('#resultado')
+    divRes.innerHTML = ""
+}
+
+//Numero de páginas
+async function main() {
+    const cardCharacters = await fetchApi(filter);
+    cards({cardCharacters})
+}
+
+
+
+main()
+
+/*
+<div class="card">
         <div class="image">
+            <div class="id">#${item.id}</div>
             <img src="${item.image}" class="imgs" alt="${item.name}">
         </div>
         <div class="info">
@@ -40,36 +104,8 @@ const cards = (characters) => {
                 <div class="status">${item.status}</div>
             </div>
             <div class="desc">
-                ${item.species}
+                ${item.species}<br>
             </div>
         </div>
     </div>
-
-        `)
-    })
-}
-
-//Campo de busca
-
-const search = (event) => {
-    event.preventDefault()
-    const name = document.querySelector('#character').value
-    fetchApi(urlapi, name)
-}
-
-//Numero de paginas
-const page = (event) => {
-    event.preventDefault()
-    const page = document.querySelector('#page').value
-    console.log(page)
-    fetchApi(urlapi, page)
-}
-
-
-
-
-fetchApi(urlapi);
-
-/*
-
-*/ 
+*/

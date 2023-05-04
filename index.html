@@ -12,31 +12,40 @@
     <title>Rick and Morty</title>
 </head>
 <body>
-    <div class="container">
-        <div class="painel">
-            <ul>
-                <li><button>Human</button></li>
-                <li><button>Alive</button></li>
-                <li><button>Dead</button></li>
-                <li><button>Human</button></li>
-            </ul>
-        </div>
+    <div class="container">       
         <div class="content_right">
+          
             <div class="search">
-                <form id="form" class="form" onsubmit="search(event)">
-                    <input type="search" name="" id="character">
-                    <button class="btn" type="submit">Vai</button>
-                </form>
-                
+              <div class="painel"> 
+                <select name="species" id="species" class="filter">
+                  <option value="" default>
+                    Species
+                  </option>
+                  <option value="animal">Animal</option>
+                  <option value="alien">Alien</option>
+                  <option value="disease">Doença</option>
+                  <option value="unknown">Desconhecido</option>
+                  <option value="human">Humano</option>
+                  <option value="humanoid">Humanoide</option>
+                  <option value="mythological">Mitologico</option>
+                  <option value="poopybutthole">Poopybutthole</option>
+                  <option value="robot">Robo</option>
+                </select>
+                <select name="status" id="status" class="filter">
+                  <option value="">
+                    Status
+                  </option>
+                  <option value="alive">Vivo</option>
+                  <option value="dead">Morto</option>
+                  <option value="unknown">Desconhecido</option>
+                </select>
+              </div>
+                    <input type="text" placeholder="Digite aqui um nome..." class="nameSearch">
             </div>
-            <select name="page" id="page" onchange="page(this.value)">
-                <script>
-                    for(let i = 1; i <= 42; i++){
-                        document.write(`<option value = "${i}">${i}</option>`)
-                    }
-                </script>
-            </select>
             <div class="content"></div>
+            <div class="btn">
+              <button class="more">Carregar Mais...</button>
+            </div>
         </div>
     </div>
 </body>
