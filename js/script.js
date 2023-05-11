@@ -73,14 +73,16 @@ async function handleMore(){
     cards({cardCharacters})
 }
 
-more.addEventListener('click', handleMore)
+more.addEventListener('click', handleMore);
 
 
 //Campo de busca
-function page ({page}) {
-    divRes = document.querySelector('#resultado')
-    divRes.innerHTML = ""
-}
+search.addEventListener('keyup', async (event) => {
+    filter.name = event.target.value;
+    content.innerHTML = '';
+    const cardCharacters = await fetchApi(filter);
+    cards({cardCharacters});
+})
 
 //Numero de páginas
 async function main() {
