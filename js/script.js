@@ -88,7 +88,6 @@ search.addEventListener('keyup', async (event) => {
     cards({ cardCharacters });
 })
 
-//Numero de páginas
 async function main() {
     const cardCharacters = await fetchApi(filter);
     cards({ cardCharacters });
